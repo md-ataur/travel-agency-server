@@ -52,6 +52,14 @@ async function run() {
             res.send(places);
         });
 
+        // GET API to get single tourism data by id
+        app.get('/places/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await tourismCollection.findOne(query);
+            res.send(result);
+        });
+
         // GET API to get all tourist data
         app.get('/tourists', async (req, res) => {
             const cursor = touristCollection.find({});
