@@ -67,6 +67,23 @@ async function run() {
             res.send(tourists);
         });
 
+        // PUT API to Update status
+        app.put('/tourists/:id', async (req, res) => {
+            const id = req.params.id;
+            const updateStatus = req.body;
+            const filter = { _id: ObjectId(id) };
+            const options = { upsert: true };
+            const updateDoc = {
+                $set: {
+                    status: updateStatus,
+                },
+            };
+
+            const result = await touristCollection.updateOne(filter, updateDoc, options);
+            res.json(result);
+        });
+
+
         // DELETE API
         app.delete('/tourists/:id', async (req, res) => {
             const id = req.params.id;
